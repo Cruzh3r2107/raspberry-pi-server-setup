@@ -10,6 +10,7 @@ Personal home server setup running Immich (photo management) and Paperless-ngx (
 4. **[Immich](./immich/)** - Photo management system
 5. **[Paperless-ngx](./paperless/)** - Document management system
 6. **[Homeassistant](./homeassistant/)** - Smart Home Operating System
+
 ## 🚀 Quick Overview
 
 This repository documents my complete Raspberry Pi 5 home server setup, including:
@@ -25,6 +26,7 @@ This repository documents my complete Raspberry Pi 5 home server setup, includin
 |---------|------|------------|
 | Immich | 2283 | http://192.168.1.154:2283 |
 | Paperless-ngx | 8000 | http://192.168.1.154:8000 |
+| Homeassistant | 8123 | http://192.168.1.154:8123 |
 
 **Remote Access (via Tailscale):**
 - Immich: `http://100.65.238.8:2283`
