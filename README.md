@@ -9,7 +9,7 @@ Personal home server setup running Immich (photo management) and Paperless-ngx (
 3. **[Tailscale VPN](./tailscale/)** - Secure remote access setup
 4. **[Immich](./immich/)** - Photo management system
 5. **[Paperless-ngx](./paperless/)** - Document management system
-
+6. **[Homeassistant](./homeassistant/)** - Smart Home Operating System
 ## 🚀 Quick Overview
 
 This repository documents my complete Raspberry Pi 5 home server setup, including:
