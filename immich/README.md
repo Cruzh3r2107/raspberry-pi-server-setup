@@ -8,9 +8,11 @@ Self-hosted photo and video management solution with mobile apps for automatic b
 2. [Prerequisites](#prerequisites)
 3. [Installation](#installation)
 4. [Initial Setup](#initial-setup)
-5. [Mobile App Setup](#mobile-app-setup)
-6. [Docker Compose Configuration](#docker-compose-configuration)
-7. [Issues and Solutions](#issues-and-solutions)
+5. [Importing Old Photos via External Libraries](#importing-old-photos-via-external-libraries)
+6. [Mobile App Setup](#mobile-app-setup)
+7. [Docker Compose Configuration](#docker-compose-configuration)
+8. [Performance Optimization](#performance-optimization)
+9. [Issues and Solutions](#issues-and-solutions)
 
 ---
 
@@ -68,8 +70,8 @@ sudo chown -R vish:vish /mnt/storage/immich
 
 ### 1. Create Setup Directory
 ```bash
-mkdir ~/immich-setup
-cd ~/immich-setup
+mkdir ~/home-server/immich
+cd ~/home-server/immich
 ```
 
 ### 2. Download Official Compose Files
@@ -132,7 +134,7 @@ Wait until you see: `Immich Server is listening on http://[::1]:2283`
 
 Open browser:
 - **Local:** `http://192.168.1.154:2283`
-- **Tailscale:** `http://100.65.238.8:2283`
+- **Tailscale:** `http://100.126.21.128:2283`
 
 ### 2. Create Admin Account
 
@@ -153,6 +155,97 @@ After signing up, you'll be logged in. You can:
 
 ---
 
+## Importing Old Photos via External Libraries
+
+If you have existing photos on your server that you want to import into Immich without copying them, you can use External Libraries. This is perfect for recovering old photo collections while keeping them in their original location.
+
+### 1. Mount Old Photos in Docker Compose
+
+First, add your old photos directory as a read-only volume in `docker-compose.yml`:
+
+```yaml
+services:
+  immich-server:
+    volumes:
+      - ${UPLOAD_LOCATION}:/data
+      - /etc/localtime:/etc/localtime:ro
+      # Mount old photos as read-only for import
+      - /mnt/storage/immich-old-library:/old-photos:ro
+```
+
+**Example:** My old photos at `/mnt/storage/immich-old-library` are mounted to `/old-photos` inside the container.
+
+### 2. Restart Immich
+
+```bash
+cd ~/home-server/immich
+docker compose down
+docker compose up -d
+```
+
+### 3. Create External Library
+
+1. **Access Admin Panel:**
+   - Go to `http://192.168.1.154:2283`
+   - Click **Administration** (gear icon)
+   - Select **External Libraries**
+
+2. **Add New Library:**
+   - Click **"Create External Library"**
+   - **Name:** Give it a descriptive name (e.g., "Old Photos 2020-2025")
+   - **Import Path:** Enter the container path: `/old-photos` or `/old-photos/admin` (depending on your folder structure)
+   - Click **"Create"**
+
+3. **Scan Library:**
+   - Click the **"Scan Library"** button
+   - Immich will scan and import all photos/videos
+
+### 4. Import Time
+
+- **Scanning:** 2-5 seconds (no file copying needed)
+- **Thumbnail Generation:** 5-15 minutes in background
+- **Total Files:** Will show count once scan completes
+
+**Example:** My import of 976 photos completed in ~3 seconds for metadata, thumbnails generated over 10 minutes.
+
+### 5. Verify Container Path
+
+To verify the path inside the container:
+
+```bash
+docker exec immich_server ls -la /old-photos/
+```
+
+This shows you the exact folder structure Immich sees.
+
+### Important Notes
+
+- ✅ **No file duplication:** Photos stay in original location (read-only)
+- ✅ **Preserves originals:** Immich can't modify external library files
+- ✅ **Folder structure:** If photos are in subfolders, include that in the path
+- ⚠️ **Path is inside container:** Use the container path (e.g., `/old-photos`), not the host path (e.g., `/mnt/storage/immich-old-library`)
+
+### Troubleshooting Import
+
+**Issue:** "No files found" or "Path not found"
+
+**Solution:**
+1. Check the container mount:
+   ```bash
+   docker exec immich_server ls -la /old-photos/
+   ```
+2. Verify you're using the **container path** not the host path
+3. Check folder permissions (should be readable by user `node` or UID 1000)
+
+**Issue:** Some images show loading errors
+
+**Solution:**
+- Wait 10-15 minutes for thumbnail generation to complete
+- Check CPU usage with `docker stats immich_server`
+- If CPU is maxed, disable video transcoding in Admin Settings
+
+---
+
 ## Mobile App Setup
 
 ### iPhone/iPad
@@ -165,7 +258,7 @@ After signing up, you'll be logged in. You can:
 2. **Configure Server:**
    - Open Immich app
    - Tap **"Connect to server"**
-   - **Server URL:** `http://100.65.238.8:2283`
+   - **Server URL:** `http://100.126.21.128:2283`
    - Tap **"Connect"**
 
 3. **Login:**
@@ -193,28 +286,89 @@ Same process as iOS - Immich app is available on Google Play Store.
 
 ### File Location
 
-`~/immich-setup/docker-compose.yml`
+`~/home-server/immich/docker-compose.yml`
 
 ### Key Services
 
-**immich_server** - Main web server (Port 2283)
-**immich_microservices** - Background jobs (ML, thumbnails)
-**immich_machine_learning** - AI face recognition, object detection
-**immich_postgres** - Database
-**immich_redis** - Cache
+**Current Setup (ML Disabled for Performance):**
+- **immich_server** - Main web server (Port 2283)
+- **immich_postgres** - Database
+- **immich_redis** - Cache
+
+**Disabled Services:**
+- ~~**immich_machine_learning**~~ - AI face recognition, object detection (disabled to save resources)
 
 ### Storage Locations
 
 | Purpose | Location |
 |---------|----------|
-| Uploaded Photos/Videos | `/mnt/storage/immich/upload` |
-| Library | `/mnt/storage/immich/library` |
-| Database | `/mnt/storage/immich/db` |
-| ML Models | `/mnt/storage/immich/model-cache` |
+| Uploaded Photos/Videos | `/mnt/storage/immich` |
+| Database | `/mnt/storage/immich-db` |
+| Old Photos (External Library) | `/mnt/storage/immich-old-library` → `/old-photos` (read-only) |
 
 ### Auto-Start on Boot
 
-All containers have `restart: unless-stopped` which means they automatically start when the Pi boots.
+All containers have `restart: always` which means they automatically start when the Pi boots.
+
+---
+
+## Performance Optimization
+
+To reduce CPU and memory usage on Raspberry Pi, the following optimizations are applied:
+
+### 1. Machine Learning Disabled
+
+Machine learning features (face recognition, object detection) are disabled by commenting out the `immich-machine-learning` service in `docker-compose.yml`.
+
+**Benefits:**
+- ✅ Significantly lower CPU usage
+- ✅ Reduced memory consumption (no ML models loaded)
+- ✅ Faster photo browsing
+- ❌ No face detection or smart search
+
+**Configuration in `.env`:**
+```env
+IMMICH_MACHINE_LEARNING_ENABLED=false
+```
+
+### 2. Video Transcoding Control
+
+Video transcoding can be very CPU-intensive on Raspberry Pi. It should be controlled via Admin UI settings.
+
+**To Disable Transcoding:**
+1. Go to **Administration** → **Settings** → **Video**
+2. Set **Transcode Policy** to **"Disabled"** or **"Required"**
+3. Click **Save**
+
+**Important:** There is no environment variable to disable transcoding. It must be configured via the Admin UI.
+
+### 3. Resource Usage
+
+**Normal Idle State:**
+- CPU: 1-5%
+- Memory: 400-600MB
+
+**During Thumbnail Generation:**
+- CPU: 50-100%
+- Memory: 600-800MB
+- Duration: 5-15 minutes after importing new photos
+
+**If CPU stays at 200%+:**
+- Check for runaway transcoding jobs
+- Verify transcoding is disabled in Admin UI
+- Restart containers to clear job queue: `docker compose down && docker compose up -d`
+
+### 4. Monitoring Performance
+
+Check resource usage:
+```bash
+docker stats immich_server
+```
+
+Check for transcoding activity:
+```bash
+docker logs immich_server | grep -i transcod
+```
 
 ---
 
@@ -233,15 +387,15 @@ All containers have `restart: unless-stopped` which means they automatically sta
 
 2. **Test in browser first:**
    - Open Safari/Chrome on phone
-   - Go to: `http://100.65.238.8:2283`
+   - Go to: `http://100.126.21.128:2283`
    - If browser works, it's an app issue
    - If browser fails, it's a network issue
 
 3. **Use correct URL format:**
    - Must include `http://` (not https)
    - Must include port `:2283`
-   - Correct: `http://100.65.238.8:2283`
-   - Wrong: `https://100.65.238.8:2283` or `100.65.238.8`
+   - Correct: `http://100.126.21.128:2283`
+   - Wrong: `https://100.126.21.128:2283` or `100.126.21.128`
 
 ### Issue 2: Containers Not Starting
 
@@ -266,7 +420,7 @@ All containers have `restart: unless-stopped` which means they automatically sta
 
 3. **Restart services:**
 ```bash
-   cd ~/immich-setup
+   cd ~/home-server/immich
    docker compose restart
 ```
 
@@ -360,7 +514,7 @@ All containers have `restart: unless-stopped` which means they automatically sta
 
 ### Update Immich
 ```bash
-cd ~/immich-setup
+cd ~/home-server/immich
 docker compose pull
 docker compose up -d
 ```
@@ -368,9 +522,10 @@ docker compose up -d
 ### Backup
 
 **Important data to backup:**
-- `/mnt/storage/immich/upload` - All your photos/videos
-- `/mnt/storage/immich/db` - Database with metadata, faces, albums
-- `~/immich-setup/.env` - Configuration
+- `/mnt/storage/immich` - All your photos/videos
+- `/mnt/storage/immich-db` - Database with metadata, faces, albums
+- `/mnt/storage/immich-old-library` - External library (old photos)
+- `~/home-server/immich/.env` - Configuration
 
 ### View Logs
 ```bash
@@ -387,13 +542,13 @@ docker logs -f immich_server
 
 ### Restart Services
 ```bash
-cd ~/immich-setup
+cd ~/home-server/immich
 docker compose restart
 ```
 
 ### Stop Services
 ```bash
-cd ~/immich-setup
+cd ~/home-server/immich
 docker compose down
 ```
 
