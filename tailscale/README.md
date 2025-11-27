@@ -51,7 +51,7 @@ https://login.tailscale.com/a/xxxxxxxxxxxxx
 tailscale ip -4
 ```
 
-**My Tailscale IP:** `100.65.238.8`
+**My Tailscale IP:** `100.126.21.128`
 
 Save this IP - you'll use it to access services remotely.
 
@@ -91,7 +91,7 @@ sudo systemctl status tailscaled
 
 1. Open **Safari** on your iPhone
 2. Make sure Tailscale is connected (green)
-3. Navigate to: `http://100.65.238.8:2283`
+3. Navigate to: `http://100.126.21.128:2283`
 4. You should see Immich login page
 
 ---
@@ -104,8 +104,10 @@ Once Tailscale is connected on both Pi and your phone/computer, use these URLs:
 
 | Service | Tailscale URL |
 |---------|---------------|
-| Immich | `http://100.65.238.8:2283` |
-| Paperless-ngx | `http://100.65.238.8:8000` |
+| Immich | `http://100.126.21.128:2283` |
+| Paperless-ngx | `http://100.126.21.128:8000` |
+| Home Assistant | `http://100.126.21.128:8124` |
+| Pi-hole | `http://100.126.21.128:8080` |
 
 ### Local Network Only:
 
@@ -113,6 +115,8 @@ Once Tailscale is connected on both Pi and your phone/computer, use these URLs:
 |---------|-----------|
 | Immich | `http://192.168.1.154:2283` |
 | Paperless-ngx | `http://192.168.1.154:8000` |
+| Home Assistant | `http://192.168.1.154:8124` |
+| Pi-hole | `http://192.168.1.154:8080` |
 
 **Important:** Always use `http://` not `https://` - services are not configured with SSL.
 
@@ -133,7 +137,7 @@ Once Tailscale is connected on both Pi and your phone/computer, use these URLs:
 
 2. **Test in browser first:**
    - Open Safari/Chrome on phone
-   - Try: `http://100.65.238.8:2283`
+   - Try: `http://100.126.21.128:2283`
    - If browser works but app doesn't, it's an app configuration issue
 
 3. **Check Pi's Tailscale status:**
