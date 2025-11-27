@@ -49,8 +49,8 @@ Docker must be installed (see [Immich setup](../immich/) for Docker installation
 sudo mkdir -p /mnt/storage/paperless/{consume,data,media,export,database}
 sudo chown -R vish:vish /mnt/storage/paperless
 
-mkdir ~/paperless-setup
-cd ~/paperless-setup
+mkdir ~/home-server/paperless
+cd ~/home-server/paperless
 ```
 
 ### 2. Create docker-compose.yml
@@ -144,7 +144,7 @@ Press Ctrl+C to exit logs.
 
 Open browser:
 - **Local:** `http://192.168.1.154:8000`
-- **Tailscale:** `http://100.65.238.8:8000`
+- **Tailscale:** `http://100.126.21.128:8000`
 
 ### 2. Login
 
@@ -197,7 +197,7 @@ Go to **Settings** (⚙️ icon):
 2. **Ensure Tailscale is running** on your phone (green checkmark)
 3. Open Paperless Mobile
 4. Tap **"Add Server"**
-5. **Server URL:** `http://100.65.238.8:8000`
+5. **Server URL:** `http://100.126.21.128:8000`
 6. **Username:** `admin`
 7. **Password:** Your password
 8. Tap **"Connect"**
@@ -273,7 +273,7 @@ Paperless automatically imports files from this folder.
 
 ### File Location
 
-`~/paperless-setup/docker-compose.yml`
+`~/home-server/paperless/docker-compose.yml`
 
 ### Services
 
@@ -312,17 +312,17 @@ Containers have `restart: unless-stopped` - automatically start on boot.
 
 2. **Test in browser first:**
    - Open Safari/Chrome on phone
-   - Go to: `http://100.65.238.8:8000`
+   - Go to: `http://100.126.21.128:8000`
    - Should see Paperless login
 
 3. **Check URL format:**
    - Must include `http://` (not https)
    - Must include port `:8000`
-   - Correct: `http://100.65.238.8:8000`
+   - Correct: `http://100.126.21.128:8000`
 
 4. **Restart containers:**
 ```bash
-   cd ~/paperless-setup
+   cd ~/home-server/paperless
    docker compose restart
 ```
 
@@ -424,7 +424,7 @@ Containers have `restart: unless-stopped` - automatically start on boot.
 
 ### Update Paperless
 ```bash
-cd ~/paperless-setup
+cd ~/home-server/paperless
 docker compose pull
 docker compose up -d
 ```
@@ -456,7 +456,7 @@ docker logs -f paperless-webserver  # Follow logs
 
 ### Restart Services
 ```bash
-cd ~/paperless-setup
+cd ~/home-server/paperless
 docker compose restart
 ```
 
