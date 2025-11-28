@@ -31,14 +31,14 @@ This repository documents my complete Raspberry Pi 5 home server setup, includin
 | Immich | 2283 | http://192.168.1.154:2283 |
 | Paperless-ngx | 8000 | http://192.168.1.154:8000 |
 | Sport Kiosk | 3000 | http://192.168.1.154:3000 |
-| Actual Budget | 5006 | http://192.168.1.154:5006 |
+| Actual Budget | 5006 | https://192.168.1.154:5006 (HTTPS required) |
 | Homeassistant | 8124 | http://192.168.1.154:8124 |
 
 **Remote Access (via Tailscale):**
 - Immich: `http://100.126.21.128:2283`
 - Paperless: `http://100.126.21.128:8000`
 - Sport Kiosk: `http://100.126.21.128:3000`
-- Actual Budget: `http://100.126.21.128:5006`
+- Actual Budget: `https://100.126.21.128:5006` (HTTPS required)
 
 ## 🛠️ Tech Stack
 

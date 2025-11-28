@@ -91,6 +91,7 @@ docker logs immich_server
 docker logs paperless-webserver
 docker logs sports-kiosk-backend
 docker logs actual-budget
+docker logs actual-budget-nginx
 docker logs -f immich_server  # Follow in real-time
 
 # Monitor resources
@@ -153,10 +154,10 @@ docker exec paperless-db pg_dump -U paperless paperless | gzip > /mnt/storage/ba
 | Immich | http://192.168.1.154:2283 | http://100.126.21.128:2283 |
 | Paperless | http://192.168.1.154:8000 | http://100.126.21.128:8000 |
 | Sport Kiosk | http://192.168.1.154:3000 | http://100.126.21.128:3000 |
-| Actual Budget | http://192.168.1.154:5006 | http://100.126.21.128:5006 |
+| Actual Budget | https://192.168.1.154:5006 | https://100.126.21.128:5006 |
 | Home Assistant | http://192.168.1.154:8124 | http://100.126.21.128:8124 |
 
-**Important:** All services use HTTP (not HTTPS). Tailscale provides encrypted tunneling.
+**Important:** Most services use HTTP (not HTTPS). Actual Budget requires HTTPS due to SharedArrayBuffer requirements (uses self-signed certificate). Tailscale provides encrypted tunneling for all services.
 
 ### Immich Configuration
 
@@ -228,16 +229,24 @@ docker exec paperless-db pg_dump -U paperless paperless | gzip > /mnt/storage/ba
 
 **Key Settings (inline in docker-compose.yml):**
 - `TZ=America/Chicago`
-- Port: 5006
+- Port: 5006 (HTTPS via Nginx reverse proxy)
 
 **Docker Compose Notes:**
-- Single service: actual_server (Node.js)
+- Two services: actual_server (Node.js) + nginx (HTTPS reverse proxy)
 - Volume: `/mnt/storage/actual-budget:/data`
+- SSL certificates: `/mnt/storage/actual-budget/certs/` (self-signed, 10 year validity)
 - Restart policy: `unless-stopped`
 - Healthcheck enabled (60s interval)
 
+**HTTPS Requirement:**
+- Actual Budget uses SharedArrayBuffer for SQLite operations
+- Modern browsers require HTTPS (or localhost) for SharedArrayBuffer security
+- Nginx provides HTTPS with self-signed certificate
+- Browser will show certificate warning on first access (normal and safe)
+- Setup script: `./setup-ssl.sh` generates certificates automatically
+
 **Performance:**
-- Normal idle: 1-3% CPU, 50-100MB RAM
+- Normal idle: 1-3% CPU, 50-100MB RAM (per container)
 - During sync: 5-10% CPU
 - Storage: 10-100MB per budget (varies by transaction count)
 
@@ -247,6 +256,7 @@ docker exec paperless-db pg_dump -U paperless paperless | gzip > /mnt/storage/ba
 - Mobile apps for iOS and Android
 - Local-first architecture (works offline)
 - Multi-budget support
+- SimpleFIN bank sync integration (optional paid service)
 
 ### System Information
 
