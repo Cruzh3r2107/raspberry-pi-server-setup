@@ -1,0 +1,49 @@
+services:
+  actual_server:
+    image: docker.io/actualbudget/actual-server:latest
+    container_name: actual-budget
+    # Port only exposed internally to nginx, not to host
+    expose:
+      - '5006'
+    environment:
+      # Timezone configuration
+      - TZ=America/Chicago
+
+      # Configuration options available at https://actualbudget.org/docs/config/
+      # Uncomment and configure as needed:
+      # - ACTUAL_UPLOAD_FILE_SYNC_SIZE_LIMIT_MB=20
+      # - ACTUAL_UPLOAD_SYNC_ENCRYPTED_FILE_SYNC_SIZE_LIMIT_MB=50
+      # - ACTUAL_UPLOAD_FILE_SIZE_LIMIT_MB=20
+    volumes:
+      # All persistent data stored on SSD, not SD card
+      - /mnt/storage/actual-budget:/data
+    healthcheck:
+      test: ['CMD-SHELL', 'node src/scripts/health-check.js']
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+    networks:
+      - actual-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: actual-budget-nginx
+    ports:
+      # HTTPS access on port 5006
+      - '5006:5006'
+    volumes:
+      # Nginx configuration (using repo config, not SSD)
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      # SSL certificates for HTTPS (stored on SSD)
+      - /mnt/storage/actual-budget/certs:/etc/nginx/certs:ro
+    depends_on:
+      - actual_server
+    restart: unless-stopped
+    networks:
+      - actual-network
+
+networks:
+  actual-network:
+    driver: bridge

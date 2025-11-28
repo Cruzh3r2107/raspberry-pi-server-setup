@@ -1,6 +1,6 @@
 # Raspberry Pi 5 Home Server Setup
 
-Personal home server setup running Immich (photo management) and Paperless-ngx (document management) with Tailscale VPN for remote access.
+Personal home server setup running Immich (photo management), Paperless-ngx (document management), Sport Kiosk (live sports scores), and Actual Budget (personal finance) with Tailscale VPN for remote access.
 
 ## 📑 Table of Contents
 
@@ -9,7 +9,9 @@ Personal home server setup running Immich (photo management) and Paperless-ngx (
 3. **[Tailscale VPN](./tailscale/)** - Secure remote access setup
 4. **[Immich](./immich/)** - Photo management system
 5. **[Paperless-ngx](./paperless/)** - Document management system
-6. **[Homeassistant](./homeassistant/)** - Smart Home Operating System
+6. **[Sport Kiosk](./sport-kiosk/)** - Live sports scores kiosk display
+7. **[Actual Budget](./actual-budget/)** - Personal finance and budget management
+8. **[Homeassistant](./homeassistant/)** - Smart Home Operating System
 
 ## 🚀 Quick Overview
 
@@ -17,6 +19,8 @@ This repository documents my complete Raspberry Pi 5 home server setup, includin
 
 - **Photo Management** with Immich - Self-hosted Google Photos alternative
 - **Document Management** with Paperless-ngx - OCR-enabled document organization
+- **Sports Kiosk** with Sport Kiosk - Live sports scores display for tablets
+- **Personal Finance** with Actual Budget - Zero-based budgeting and expense tracking
 - **Remote Access** via Tailscale - Secure VPN for accessing services anywhere
 - **Touchscreen Display** - 3.5" display showing system information
 
@@ -26,11 +30,15 @@ This repository documents my complete Raspberry Pi 5 home server setup, includin
 |---------|------|------------|
 | Immich | 2283 | http://192.168.1.154:2283 |
 | Paperless-ngx | 8000 | http://192.168.1.154:8000 |
-| Homeassistant | 8123 | http://192.168.1.154:8123 |
+| Sport Kiosk | 3000 | http://192.168.1.154:3000 |
+| Actual Budget | 5006 | http://192.168.1.154:5006 |
+| Homeassistant | 8124 | http://192.168.1.154:8124 |
 
 **Remote Access (via Tailscale):**
-- Immich: `http://100.65.238.8:2283`
-- Paperless: `http://100.65.238.8:8000`
+- Immich: `http://100.126.21.128:2283`
+- Paperless: `http://100.126.21.128:8000`
+- Sport Kiosk: `http://100.126.21.128:3000`
+- Actual Budget: `http://100.126.21.128:5006`
 
 ## 🛠️ Tech Stack
 
@@ -43,6 +51,7 @@ This repository documents my complete Raspberry Pi 5 home server setup, includin
 
 - **Immich** - Available on iOS & Android App Stores
 - **Paperless Mobile** - Available on iOS & Android App Stores
+- **Actual Budget** - Available on iOS & Android App Stores
 - **Tailscale** - Required for remote access
 
 ---
