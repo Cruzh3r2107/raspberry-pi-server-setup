@@ -22,6 +22,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       # Mount old photos as read-only for import
       - /mnt/storage/immich-old-library:/old-photos:ro
+      - /mnt/storage/googledrivepicture:/external:ro
     env_file:
       - .env
     ports:

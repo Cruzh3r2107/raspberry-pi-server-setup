@@ -1,0 +1,80 @@
+(node:7) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[31m[Nest] 7  - [39m02/04/2026, 4:36:20 AM [31m  ERROR[39m [33m[Microservices:StorageService][39m [31mFailed to read (/data/encoded-video/.immich): Error: ENOENT: no such file or directory, open '/data/encoded-video/.immich'[39m
+microservices worker error: Error: Failed to read: "<UPLOAD_LOCATION>/encoded-video/.immich (/data/encoded-video/.immich) - Please see https://docs.immich.app/administration/system-integrity#folder-checks for more information.", stack: Error: Failed to read: "<UPLOAD_LOCATION>/encoded-video/.immich (/data/encoded-video/.immich) - Please see https://docs.immich.app/administration/system-integrity#folder-checks for more information."
+    at StorageService.verifyReadAccess (/usr/src/app/server/dist/services/storage.service.js:129:19)
+    at async /usr/src/app/server/dist/services/storage.service.js:56:21
+    at async /usr/src/app/server/dist/repositories/database.repository.js:368:27
+    at async /usr/src/app/server/node_modules/.pnpm/kysely@0.28.2/node_modules/kysely/dist/cjs/kysely.js:535:20
+    at async DefaultConnectionProvider.provideConnection (/usr/src/app/server/node_modules/.pnpm/kysely@0.28.2/node_modules/kysely/dist/cjs/driver/default-connection-provider.js:12:20)
+    at async /usr/src/app/server/dist/repositories/database.repository.js:365:13
+microservices worker exited with code 1
+Killing api process
+(node:7) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[31m[Nest] 7  - [39m02/04/2026, 4:36:29 AM [31m  ERROR[39m [33m[Microservices:StorageService][39m [31mFailed to read (/data/encoded-video/.immich): Error: ENOENT: no such file or directory, open '/data/encoded-video/.immich'[39m
+microservices worker error: Error: Failed to read: "<UPLOAD_LOCATION>/encoded-video/.immich (/data/encoded-video/.immich) - Please see https://docs.immich.app/administration/system-integrity#folder-checks for more information.", stack: Error: Failed to read: "<UPLOAD_LOCATION>/encoded-video/.immich (/data/encoded-video/.immich) - Please see https://docs.immich.app/administration/system-integrity#folder-checks for more information."
+    at StorageService.verifyReadAccess (/usr/src/app/server/dist/services/storage.service.js:129:19)
+    at async /usr/src/app/server/dist/services/storage.service.js:56:21
+    at async /usr/src/app/server/dist/repositories/database.repository.js:368:27
+    at async /usr/src/app/server/node_modules/.pnpm/kysely@0.28.2/node_modules/kysely/dist/cjs/kysely.js:535:20
+    at async DefaultConnectionProvider.provideConnection (/usr/src/app/server/node_modules/.pnpm/kysely@0.28.2/node_modules/kysely/dist/cjs/driver/default-connection-provider.js:12:20)
+    at async /usr/src/app/server/dist/repositories/database.repository.js:365:13
+microservices worker exited with code 1
+Killing api process
+(node:7) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[31m[Nest] 7  - [39m02/04/2026, 4:36:38 AM [31m  ERROR[39m [33m[Microservices:StorageService][39m [31mFailed to read (/data/encoded-video/.immich): Error: ENOENT: no such file or directory, open '/data/encoded-video/.immich'[39m
+microservices worker error: Error: Failed to read: "<UPLOAD_LOCATION>/encoded-video/.immich (/data/encoded-video/.immich) - Please see https://docs.immich.app/administration/system-integrity#folder-checks for more information.", stack: Error: Failed to read: "<UPLOAD_LOCATION>/encoded-video/.immich (/data/encoded-video/.immich) - Please see https://docs.immich.app/administration/system-integrity#folder-checks for more information."
+    at StorageService.verifyReadAccess (/usr/src/app/server/dist/services/storage.service.js:129:19)
+    at async /usr/src/app/server/dist/services/storage.service.js:56:21
+    at async /usr/src/app/server/dist/repositories/database.repository.js:368:27
+    at async /usr/src/app/server/node_modules/.pnpm/kysely@0.28.2/node_modules/kysely/dist/cjs/kysely.js:535:20
+    at async DefaultConnectionProvider.provideConnection (/usr/src/app/server/node_modules/.pnpm/kysely@0.28.2/node_modules/kysely/dist/cjs/driver/default-connection-provider.js:12:20)
+    at async /usr/src/app/server/dist/repositories/database.repository.js:365:13
+microservices worker exited with code 1
+Killing api process
+(node:8) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:8) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[31m[Nest] 8  - [39m02/04/2026, 4:36:47 AM [31m  ERROR[39m [33m[Microservices:StorageService][39m [31mFailed to read (/data/encoded-video/.immich): Error: ENOENT: no such file or directory, open '/data/encoded-video/.immich'[39m
+microservices worker error: Error: Failed to read: "<UPLOAD_LOCATION>/encoded-video/.immich (/data/encoded-video/.immich) - Please see https://docs.immich.app/administration/system-integrity#folder-checks for more information.", stack: Error: Failed to read: "<UPLOAD_LOCATION>/encoded-video/.immich (/data/encoded-video/.immich) - Please see https://docs.immich.app/administration/system-integrity#folder-checks for more information."
+    at StorageService.verifyReadAccess (/usr/src/app/server/dist/services/storage.service.js:129:19)
+    at async /usr/src/app/server/dist/services/storage.service.js:56:21
+    at async /usr/src/app/server/dist/repositories/database.repository.js:368:27
+    at async /usr/src/app/server/node_modules/.pnpm/kysely@0.28.2/node_modules/kysely/dist/cjs/kysely.js:535:20
+    at async DefaultConnectionProvider.provideConnection (/usr/src/app/server/node_modules/.pnpm/kysely@0.28.2/node_modules/kysely/dist/cjs/driver/default-connection-provider.js:12:20)
+    at async /usr/src/app/server/dist/repositories/database.repository.js:365:13
+microservices worker exited with code 1
+Killing api process
+(node:7) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[31m[Nest] 7  - [39m02/04/2026, 4:36:57 AM [31m  ERROR[39m [33m[Microservices:StorageService][39m [31mFailed to read (/data/encoded-video/.immich): Error: ENOENT: no such file or directory, open '/data/encoded-video/.immich'[39m
+microservices worker error: Error: Failed to read: "<UPLOAD_LOCATION>/encoded-video/.immich (/data/encoded-video/.immich) - Please see https://docs.immich.app/administration/system-integrity#folder-checks for more information.", stack: Error: Failed to read: "<UPLOAD_LOCATION>/encoded-video/.immich (/data/encoded-video/.immich) - Please see https://docs.immich.app/administration/system-integrity#folder-checks for more information."
+    at StorageService.verifyReadAccess (/usr/src/app/server/dist/services/storage.service.js:129:19)
+    at async /usr/src/app/server/dist/services/storage.service.js:56:21
+    at async /usr/src/app/server/dist/repositories/database.repository.js:368:27
+    at async /usr/src/app/server/node_modules/.pnpm/kysely@0.28.2/node_modules/kysely/dist/cjs/kysely.js:535:20
+    at async DefaultConnectionProvider.provideConnection (/usr/src/app/server/node_modules/.pnpm/kysely@0.28.2/node_modules/kysely/dist/cjs/driver/default-connection-provider.js:12:20)
+    at async /usr/src/app/server/dist/repositories/database.repository.js:365:13
+microservices worker exited with code 1
+Killing api process

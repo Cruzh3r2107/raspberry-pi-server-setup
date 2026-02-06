@@ -1,0 +1,31 @@
+services:
+  sport-kiosk-frontend:
+    build: ./frontend
+    container_name: sport-kiosk-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - sport-kiosk-backend
+    restart: unless-stopped
+
+  sport-kiosk-backend:
+    build: ./backend
+    container_name: sport-kiosk-backend
+    expose:
+      - "3001"
+    environment:
+      - TZ=America/Chicago
+      - REDIS_HOST=sport-kiosk-redis
+      - REDIS_PORT=6379
+      - PORT=3001
+    depends_on:
+      - sport-kiosk-redis
+    restart: unless-stopped
+
+  sport-kiosk-redis:
+    image: redis:7-alpine
+    container_name: sport-kiosk-redis
+    volumes:
+      - /mnt/storage/sport-kiosk/redis:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
