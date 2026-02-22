@@ -2,6 +2,8 @@
 
 A full-stack sports kiosk displaying live scores and upcoming games for multiple sports. Optimized for tablet landscape viewing with a 60/40 split-screen layout when live games are active.
 
+**Source Code:** https://github.com/Cruzh3r2107/sport-kiosk
+
 ## Features
 
 - **Live Score Display**: Large score panel with auto-rotation every 30s for multiple live games
@@ -48,8 +50,8 @@ docker logs -f sport-kiosk-backend
 
 | Interface | URL |
 |-----------|-----|
-| Local | http://192.168.1.154:3000 |
-| Tailscale | http://100.126.21.128:3000 |
+| Local | http://<local-ip>:3000 |
+| Tailscale | http://<tailscale-ip>:3000 |
 
 ## API Endpoints
 
@@ -194,7 +196,7 @@ curl http://localhost:3000/api/games | jq
 ### Recommended Settings
 
 1. Open Safari/Chrome on tablet
-2. Navigate to http://192.168.1.154:3000
+2. Navigate to http://<local-ip>:3000
 3. Lock screen to landscape orientation
 4. Add to Home Screen for fullscreen experience
 5. Enable "Guided Access" (iOS) or "Pin App" (Android) for kiosk mode
