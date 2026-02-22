@@ -57,6 +57,13 @@ services:
       PAPERLESS_ADMIN_PASSWORD: Balidaan@1
       USERMAP_UID: 1000
       USERMAP_GID: 1000
+      # Lightweight settings
+      PAPERLESS_OCR_MODE: skip
+      PAPERLESS_TASK_WORKERS: 1
+      PAPERLESS_THREADS_PER_WORKER: 1
+      PAPERLESS_WEBSERVER_WORKERS: 1
+      PAPERLESS_ENABLE_NLTK: "false"
+      PAPERLESS_CONSUMER_POLLING: 0
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000"]
       interval: 30s
