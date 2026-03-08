@@ -65,6 +65,7 @@ services:
       postgres
       -c max_connections=30
       -c shared_buffers=256MB
+      -c shared_preload_libraries=vchord
     volumes:
       # Do not edit the next line. If you want to change the database storage location on your system, edit the value of DB_DATA_LOCATION in the .env file
       - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
