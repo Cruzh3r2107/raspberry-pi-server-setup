@@ -1,0 +1,11 @@
+# Private
+CLAUDE.md
+
+# Environment files
+.env
+*.env
+
+# Secrets
+*.key
+*.pem
+*.crt
